@@ -70,7 +70,7 @@ if ( $title ) {
 		<li><a href="http://wiki.github.com/jquery/testswarm">About</a></li>
 	</ul>
 	<h1><a href="<?php echo swarmpath( "/" ); ?>"><img src="<?php echo swarmpath( "images/testswarm_logo_wordmark.png" ); ?>" alt="TestSwarm" title="TestSwarm"/></a></h1>
-	<h2><?php echo  $title; ?></h2>
+	<h2><?php echo  $title;  ?></h2>
 	<div id="main">
 	<?php } if ( $state && file_exists($contentFile) ) {
 		require $contentFile;

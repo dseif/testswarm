@@ -95,12 +95,14 @@ CREATE TABLE `useragents` (
   `name` varchar(255) NOT NULL default '',
   `engine` varchar(255) NOT NULL default '',
   `version` varchar(255) NOT NULL default '',
+  `os` varchar(255) NOT NULL default '',
   `active` tinyint(4) NOT NULL default '0',
   `current` tinyint(4) NOT NULL default '0',
   `popular` tinyint(4) NOT NULL default '0',
   `gbs` tinyint(4) NOT NULL default '0',
   `beta` tinyint(4) NOT NULL default '0',
   `mobile` tinyint(4) NOT NULL default '0',
+  `popcorn` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=48 ;
 

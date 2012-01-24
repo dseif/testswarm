@@ -45,11 +45,13 @@
 				$ua_type = "beta = 1";
 			} else if ( $_REQUEST["browsers"] == "mobile" ) {
 				$ua_type = "mobile = 1";
+			} else if ( $_REQUEST["browsers"] == "popcorn" ) {
+				$ua_type = "(popcorn = 1)";
 			} else if ( $_REQUEST["browsers"] == "popularbeta" ) {
 				$ua_type = "(popular = 1 OR beta = 1)";
 			} else if ( $_REQUEST["browsers"] == "popularbetamobile" ) {
 				$ua_type = "(popular = 1 OR beta = 1 OR mobile = 1)";
-			}
+                        }
 
 			$result = mysql_queryf("SELECT id FROM useragents WHERE active = 1 AND $ua_type;");
 

@@ -50,7 +50,7 @@
 <table class="results"><tbody>
 <?php
 
-	$result = mysql_queryf("SELECT runs.id as run_id, runs.url as run_url, runs.name as run_name, useragents.engine as browser, useragents.name as browsername, useragents.id as useragent_id, run_useragent.status as status FROM run_useragent, runs, useragents WHERE runs.job_id=%u AND run_useragent.run_id=runs.id AND run_useragent.useragent_id=useragents.id ORDER BY run_id, browsername;", $job_id);
+	$result = mysql_queryf("SELECT runs.id as run_id, runs.url as run_url, runs.name as run_name, useragents.engine as browser, useragents.name as browsername, useragents.id as useragent_id, useragents.os as os, run_useragent.status as status FROM run_useragent, runs, useragents WHERE runs.job_id=%u AND run_useragent.run_id=runs.id AND run_useragent.useragent_id=useragents.id ORDER BY run_id, browsername;", $job_id);
 
 	$last = "";
 	$output = "";
@@ -81,7 +81,8 @@
 			array_push( $browsers, array(
 				"name" => $row["browsername"],
 				"engine" => $row["browser"],
-				"id" => $row["useragent_id"]
+				"id" => $row["useragent_id"],
+                                "os" => $row["os"]
 			) );
 		}
 
@@ -120,9 +121,11 @@
 		$last_browser = array();
 		foreach ( $browsers as $browser ) {
 			if ( $last_browser["id"] != $browser["id"] ) {
+
+                                $browserOS = $browser["os"] == "*" ? "" : $browser["os"] . ".";
 				$header .= '<th><div class="browser">' .
 					'<img src="' . swarmpath( 'images/' ) . $browser["engine"] .
-					'.sm.png" class="browser-icon ' . $browser["engine"] .
+					'.sm.' . $browserOS . 'png" class="browser-icon ' . $browser["engine"] .
 					'" alt="' . $browser["name"] .
 					'" title="' . $browser["name"] .
 					'"/><span class="browser-name">' .
