@@ -9,6 +9,6 @@ cd "clones/${2}"
 git remote add popcorn ${1}
 
 # pull in our branch from the remote
-git pull popcorn testswarm2
+git pull popcorn develop 
 
 perl ../../../scripts/testswarm-popcorn-git.pl.txt ${2}

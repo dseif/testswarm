@@ -1,6 +1,5 @@
 <?php
 
-`sh build.sh OOOOO ssssssss`;
 	function get_status($num){
 		if ( $num == 0 ) {
 			return "Not started yet.";
@@ -85,26 +84,10 @@
 		$job_name = $row[0];
 		$job_status = get_status(intval($row[1]));
 if( intval($row[1]) != 0 ) {
-echo "ASDASDASD";
-$url = "http://96.126.109.151:1337/jobdone";
-$fields = array('data'=>urlencode("1234"));
-foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
-rtrim($fields_string,'&');
-//open connection
-$ch = curl_init();
-
-//set the url, number of POST vars, POST data
-curl_setopt($ch,CURLOPT_URL,$url);
-curl_setopt($ch,CURLOPT_POST,count($fields));
-curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
-
-//execute post
-$result = curl_exec($ch);
-
-//close connection
-curl_close($ch);
-  
-}
+//$request = new HTTP_Request2('http://96.126.109.151:1234/jobdone',
+//                             HTTP_Request2::METHOD_GET, array('use_brackets' => true));
+//$request->send();
+} 
 		$job_id = $row[2];
 
 		$output .= '<tr><th><a href="' . swarmpath( "job/{$job_id}/" ) . '">' . strip_tags($job_name) . "</a></th>\n";

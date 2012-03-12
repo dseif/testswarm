@@ -9,7 +9,7 @@
     exit;
   }
 
-  if( $payload->ref === 'refs/heads/testswarm2') {
+  if( $payload->ref === 'refs/heads/develop') {
 
  
     $url = str_replace('https://', 'git://', $payload->repository->url);
