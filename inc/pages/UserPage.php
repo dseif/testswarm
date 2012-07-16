@@ -135,7 +135,10 @@ class UserPage extends Page {
 
 			foreach ( $data["recentJobs"] as $job ) {
 
-				$html .= '<tr><th><a href="' . htmlspecialchars( $job["url"] ) . '">' . htmlspecialchars( strip_tags( $job["name"] ) ) . "</a></th>\n";
+				$jobName = mb_split( "/", htmlspecialchars( strip_tags( $job["url"] ) ) );
+				$jobName = $jobName[5];
+
+				$html .= '<tr><th><a href="'. htmlspecialchars( $job["url"] ) . '"> Job #' . $jobName . "</a></th>\n";
 
 				foreach ( $data["uasInJobs"] as $uaID => $uaData ) {
 					$html .= isset( $job["uaSummary"][$uaID] )

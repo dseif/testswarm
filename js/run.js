@@ -161,8 +161,8 @@
 				iframe = document.createElement( 'iframe' );
 				iframe.width = 1000;
 				iframe.height = 600;
-				iframe.className = 'test-runner-frame';
-				iframe.src = currRunUrl + (currRunUrl.indexOf( '?' ) > -1 ? '&' : '?') + $.param({
+				iframe.className = "test-runner-frame";
+				iframe.src = window.location.protocol + "//" + window.location.host + "/" + currRunUrl + (currRunUrl.indexOf( "?" ) > -1 ? "&" : "?") + $.param({
 					// Cache buster
 					'_' : new Date().getTime(),
 					// Homing signal for inject.js so that it can find its target for action=saverun

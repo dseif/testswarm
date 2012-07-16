@@ -16,6 +16,9 @@ class SignupAction extends Action {
 	 * @actionParam password string
 	 */
 	public function doAction() {
+		//disabled
+		exit;
+
 		$request = $this->getContext()->getRequest();
 
 		// Already logged in ?
@@ -49,6 +52,10 @@ class SignupAction extends Action {
 	 * @return bool
 	 */
 	public function doCreateUser( $username, $password ) {
+		
+		// disabled
+		exit;
+
 		$db = $this->getContext()->getDB();
 
 		if ( !$username || !$password ) {

@@ -142,18 +142,12 @@ class BrowserInfo {
 			$browscap = $this->browscapData;
 			$found = false;
 			foreach ( $uaItems as $uaID => $uaItem ) {
-				if ( $uaID === "{$browscap->Browser}|{$browscap->MajorVer}|{$browscap->MinorVer}" ) {
+				if ( $uaID === "{$browscap->Browser}|{$browscap->Platform}" ) {
 					$found = $uaItem;
 					$found->id = $uaID;
-					break;
-				} elseif ( $uaID === "{$browscap->Browser}|{$browscap->MajorVer}" ) {
+				} else if ( $uaID === "{$browscap->Browser}|{$browscap->MajorVer}|{$browscap->Platform}" ) {
 					$found = $uaItem;
 					$found->id = $uaID;
-					break;
-				} elseif ( $uaID === $browscap->Browser ) {
-					$found = $uaItem;
-					$found->id = $uaID;
-					break;
 				}
 			}
 

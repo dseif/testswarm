@@ -81,9 +81,9 @@ class Client {
 		$db = $this->context->getDB();
 		$request = $this->context->getRequest();
 
-
 		// If the useragent isn't known, abort with an error message
 		if ( !$browserInfo->isInSwarmUaIndex() ) {
+			// echo print_r( $browserInfo );
 			throw new SwarmException( "Your browser is not suported in this TestSwarm "
 				. "(useragent string: {$browserInfo->getRawUA()})." );
 		}

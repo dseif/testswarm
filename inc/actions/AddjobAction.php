@@ -139,6 +139,30 @@ class AddjobAction extends Action {
 			return;
 		}
 
+		// Generate a list of user agent IDs based on the selected browser sets
+		$browserSetsCnt = count( $browserSets );
+		$browserSets = array_unique( $browserSets );
+		if ( $browserSetsCnt != count( $browserSets ) ) {
+			$this->setError( "invalid-input", "Duplicate entries in browserSets parameter." );
+			return;
+		}
+
+		$swarmUaIndex = BrowserInfo::getSwarmUAIndex();
+		$uaIDs = array();
+
+		foreach ( $browserSets as $browserSet ) {
+			if ( !isset( $conf->browserSets->$browserSet ) ) {
+				$this->setError( "invalid-input", "Unknown browser set: $browserSet." );
+			}
+			// Merge the arrays, and re-index with unique (also prevents duplicate entries)
+			$uaIDs = array_unique( array_merge( $uaIDs, $conf->browserSets->$browserSet ) );
+		}
+
+		if ( !count( $uaIDs ) ) {
+			$this->setError( "data-corrupt", "No user agents matched the generated browserset filter." );
+			return;
+		}
+
 		// Create all runs and schedule them for the wanted browsersets in run_useragent
 		foreach ( $runs as $run ) {
 

@@ -40,7 +40,7 @@ class SignupPage extends Page {
 			$html .= html_tag( 'div', array( 'class' => 'alert alert-error' ), $error['info'] );
 		}
 
-		$html .=
+		/*$html .=
 			'<div class="well">'
 				. '<p>Create an account. If you already have an account you may <a href="' . swarmpath( "login" )
 				. '">login here</a>.</p>'
@@ -59,7 +59,9 @@ class SignupPage extends Page {
 				. '<input type="submit" value="Signup" class="btn btn-primary">'
 			. '</div>';
 
-		$html .= '</fieldset></form>';
+		$html .= '</fieldset></form>';*/
+
+		$html .= '<div>Public signups are disabled</div>';
 
 		return $html;
 	}

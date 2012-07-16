@@ -85,7 +85,7 @@ class JobPage extends Page {
 		$html = '';
 
 		foreach ( $runs as $run ) {
-			$html .= '<tr><th><a href="' . htmlspecialchars( $run['info']['url'] ) . '">'
+			$html .= '<tr><th><a href="' . swarmpath( $run['info']['url'] ) . '">'
 				. $run['info']['name'] . '</a></th>';
 
 			// Looping over $userAgents instead of $run["uaRuns"],

@@ -1,13 +1,19 @@
 #!/usr/bin/perl
 
+use JSON;
+
 # CONFIGURE
+
+my @tmpCOMMIT = split( "/", $ARGV[ 0 ] );
+my $COMMIT = @tmpCOMMIT[ 0 ];
+my $BRANCH = $ARGV[ 1 ];
 
 # The location of the TestSwarm that you're going to run against.
 
-my $SWARM = "http://swarm.jquery.org/api.php";
+my $SWARM = "http://norway.proximity.on.ca/api.php";
 
 # Your TestSwarm username.
-my $USER = "jqueryui";
+my $USER = "popcornjs";
 
 ## replace this
 # Your authorization token.
@@ -20,7 +26,7 @@ my $NUM = 1;
 my $MAX_RUNS = 5;
 
 # The directory in which the checkouts will occur.
-my $BASE_DIR = "/srv/swarm.jquery.org/htdocs/git/jquery-ui";
+my $BASE_DIR = "/var/www/content/clones/$COMMIT";
 
 # A script tag loading in the TestSwarm injection script will
 # be added at the bottom of the <head> in the following file.
@@ -30,7 +36,7 @@ my $BASE_DIR = "/srv/swarm.jquery.org/htdocs/git/jquery-ui";
 
 # Note: The string {REV} will be replaced with the current
 #       commit number/hash.
-my $JOB_NAME = "jQuery UI Commit <a href=\"https://github.com/jquery/jquery-ui/commit/{FREV}\">#{REV}</a>";
+my $JOB_NAME = "Popcorn-js Commit<br /><a href=\"https://github.com/mozilla/popcorn-js/commit/$COMMIT\">$COMMIT</a><br />Branch Name: $BRANCH";
 
 # The browsers you wish to run against. Options include:
 #  - "all" all available browsers.
@@ -41,7 +47,7 @@ my $JOB_NAME = "jQuery UI Commit <a href=\"https://github.com/jquery/jquery-ui/c
 #  - "mobile" the current releases of mobile browsers
 #  - "popularbeta" the most popular browser and their upcoming releases
 #  - "popularbetamobile" the most popular browser and their upcoming releases and mobile browsers
-my $BROWSERS = "popular";
+my $BROWSERS = "default";
 
 # All the suites that you wish to run within this job
 # (can be any number of suites)
@@ -49,20 +55,28 @@ my $BROWSERS = "popular";
 ## insert static suite list here
 my %SUITES = ();
 
-# Comment these out if you wish to define a custom set of SUITES above
-## REPLACE local
-my $SUITE = "http://swarm.jquery.org/git/jquery-ui/{REV}";
+#my $SUITE = "http://swarm.jquery.org/git/jquery-ui/{REV}";
 
-sub BUILD_SUITES {
-	%SUITES = map { /(\w+).html$/; $1 => "$SUITE/$_?$1"; } glob("tests/unit/*/*.html");
+my $json;
+{
+  local $/; #enable slurp
+  open my $fh, "<", "/var/www/content/clones/$COMMIT/tests.conf";
+  $json = <$fh>;
+}
 
-    print "suites: $SUITES";
-    print %SUITES;
+my %data = %{decode_json($json)};
+
+while ( my ( $key, $value ) = each( %data ) ) {
+  if( $value =~ /HASH/ ) {
+    while ( my ( $innerKey, $innerValue ) = each( %{$value} ) ) {
+      $SUITES{$innerKey} = "content/clones/$COMMIT/" . $innerValue;
+    }
+  }
 }
 
 ########### NO NEED TO CONFIGURE BELOW HERE ############
 
-my $DEBUG = 0;
+my $DEBUG = 1;
 
 if ( ! -e $BASE_DIR ) {
     die "Problem locating source.";
@@ -137,8 +151,8 @@ sub clean {
 	my $rev = shift;
 	my $frev = shift;
 
-	$str =~ s/{REV}/$rev/g;
-	$str =~ s/{FREV}/$frev/g;
+	#$str =~ s/{REV}/$rev/g;
+	#$str =~ s/{FREV}/$frev/g;
 	$str =~ s/([^A-Za-z0-9])/sprintf("%%%02X", ord($1))/seg;
 	$str;
 }
