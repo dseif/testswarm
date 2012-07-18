@@ -135,8 +135,8 @@ class UserPage extends Page {
 
 			foreach ( $data["recentJobs"] as $job ) {
 
-                                $jobName = preg_split( "/commit\/[a-z0-9]*\"\>/", $job["name"] );
-+                               $jobName = substr( $jobName[1], 0, 10 );
+        $jobName = preg_split( "/commit\/[a-z0-9]*\"\>/", $job["name"] );
+        $jobName = substr( $jobName[1], 0, 10 );
 
 				$html .= '<tr><th><a href="'. htmlspecialchars( $job["url"] ) . '">' . $jobName . "</a></th>\n";
 
