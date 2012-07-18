@@ -135,10 +135,10 @@ class UserPage extends Page {
 
 			foreach ( $data["recentJobs"] as $job ) {
 
-				$jobName = mb_split( "/", htmlspecialchars( strip_tags( $job["url"] ) ) );
-				$jobName = $jobName[5];
+        $jobName = preg_split( "/commit\/[a-z0-9]*\"\>/", $job["name"] );
+        $jobName = substr( $jobName[1], 0, 10 );
 
-				$html .= '<tr><th><a href="'. htmlspecialchars( $job["url"] ) . '"> Job #' . $jobName . "</a></th>\n";
+				$html .= '<tr><th><a href="'. htmlspecialchars( $job["url"] ) . '">' . $jobName . "</a></th>\n";
 
 				foreach ( $data["uasInJobs"] as $uaID => $uaData ) {
 					$html .= isset( $job["uaSummary"][$uaID] )
